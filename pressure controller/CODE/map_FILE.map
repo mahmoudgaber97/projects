@@ -1,0 +1,148 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x08000000         0x00010000         xr
+RAM              0x20000000         0x00005000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.text           0x08000000      0xe30
+ *(.vector*)
+ .vector        0x08000000       0x4c startup.o
+ *(.text*)
+ .text          0x0800004c      0xa34 GPIO_V3_PROG.o
+                0x0800004c                SETPORT_Void
+                0x08000098                PORTvoidCONFIGRATION
+                0x080000f4                SETPINvalue
+                0x0800081c                PINCONFIGvoid
+                0x08000968                GETu8PIN
+                0x080009d8                MGPIO_u16GetPortValue
+ .text          0x08000a80       0x60 main.o
+                0x08000a80                main
+ .text          0x08000ae0        0x0 Pressure_sensor.o
+ .text          0x08000ae0      0x348 RCCV2_Program.o
+                0x08000ae0                RCC_void_HSIdrive
+                0x08000b40                RCC_void_HSEDRIVER
+                0x08000ba0                RCC_void_ENABLEIntilazation
+                0x08000c10                RCC_PLLvoidConfigration
+                0x08000d24                RCC_EN_Prepheral
+                0x08000da4                RCC_DISA_Prepheral
+ .text          0x08000e28        0x8 startup.o
+ *(.rodata*)
+
+.glue_7         0x08000e30        0x0
+ .glue_7        0x08000e30        0x0 linker stubs
+
+.glue_7t        0x08000e30        0x0
+ .glue_7t       0x08000e30        0x0 linker stubs
+
+.vfp11_veneer   0x08000e30        0x0
+ .vfp11_veneer  0x08000e30        0x0 linker stubs
+
+.v4_bx          0x08000e30        0x0
+ .v4_bx         0x08000e30        0x0 linker stubs
+
+.iplt           0x08000e30        0x0
+ .iplt          0x08000e30        0x0 GPIO_V3_PROG.o
+
+.rel.dyn        0x08000e30        0x0
+ .rel.iplt      0x08000e30        0x0 GPIO_V3_PROG.o
+
+.data           0x08000e30        0x0
+ *(.data*)
+ .data          0x08000e30        0x0 GPIO_V3_PROG.o
+ .data          0x08000e30        0x0 main.o
+ .data          0x08000e30        0x0 Pressure_sensor.o
+ .data          0x08000e30        0x0 RCCV2_Program.o
+ .data          0x08000e30        0x0 startup.o
+
+.igot.plt       0x08000e30        0x0
+ .igot.plt      0x08000e30        0x0 GPIO_V3_PROG.o
+
+.bss            0x20000000        0x0
+ *(.bss*)
+ .bss           0x20000000        0x0 GPIO_V3_PROG.o
+ .bss           0x20000000        0x0 main.o
+ .bss           0x20000000        0x0 Pressure_sensor.o
+ .bss           0x20000000        0x0 RCCV2_Program.o
+ .bss           0x20000000        0x0 startup.o
+LOAD GPIO_V3_PROG.o
+LOAD main.o
+LOAD Pressure_sensor.o
+LOAD RCCV2_Program.o
+LOAD startup.o
+OUTPUT(FILE.elf elf32-littlearm)
+
+.debug_info     0x00000000      0x504
+ .debug_info    0x00000000      0x299 GPIO_V3_PROG.o
+ .debug_info    0x00000299       0x8c main.o
+ .debug_info    0x00000325      0x1b9 RCCV2_Program.o
+ .debug_info    0x000004de       0x26 startup.o
+
+.debug_abbrev   0x00000000      0x1c3
+ .debug_abbrev  0x00000000      0x100 GPIO_V3_PROG.o
+ .debug_abbrev  0x00000100       0x42 main.o
+ .debug_abbrev  0x00000142       0x6d RCCV2_Program.o
+ .debug_abbrev  0x000001af       0x14 startup.o
+
+.debug_loc      0x00000000      0x47c
+ .debug_loc     0x00000000      0x228 GPIO_V3_PROG.o
+ .debug_loc     0x00000228       0x2c main.o
+ .debug_loc     0x00000254      0x228 RCCV2_Program.o
+
+.debug_aranges  0x00000000       0x80
+ .debug_aranges
+                0x00000000       0x20 GPIO_V3_PROG.o
+ .debug_aranges
+                0x00000020       0x20 main.o
+ .debug_aranges
+                0x00000040       0x20 RCCV2_Program.o
+ .debug_aranges
+                0x00000060       0x20 startup.o
+
+.debug_line     0x00000000      0x397
+ .debug_line    0x00000000      0x26f GPIO_V3_PROG.o
+ .debug_line    0x0000026f       0x40 main.o
+ .debug_line    0x000002af        0x0 Pressure_sensor.o
+ .debug_line    0x000002af       0xad RCCV2_Program.o
+ .debug_line    0x0000035c       0x3b startup.o
+
+.debug_str      0x00000000      0x353
+ .debug_str     0x00000000      0x21d GPIO_V3_PROG.o
+                                0x244 (size before relaxing)
+ .debug_str     0x0000021d        0xc main.o
+                                0x164 (size before relaxing)
+ .debug_str     0x00000229       0x12 Pressure_sensor.o
+                                 0xe6 (size before relaxing)
+ .debug_str     0x0000023b       0xff RCCV2_Program.o
+                                0x25d (size before relaxing)
+ .debug_str     0x0000033a       0x19 startup.o
+                                 0x82 (size before relaxing)
+
+.comment        0x00000000       0x7e
+ .comment       0x00000000       0x7e GPIO_V3_PROG.o
+                                 0x7f (size before relaxing)
+ .comment       0x0000007e       0x7f main.o
+ .comment       0x0000007e       0x7f Pressure_sensor.o
+ .comment       0x0000007e       0x7f RCCV2_Program.o
+
+.ARM.attributes
+                0x00000000       0x31
+ .ARM.attributes
+                0x00000000       0x33 GPIO_V3_PROG.o
+ .ARM.attributes
+                0x00000033       0x33 main.o
+ .ARM.attributes
+                0x00000066       0x33 Pressure_sensor.o
+ .ARM.attributes
+                0x00000099       0x33 RCCV2_Program.o
+ .ARM.attributes
+                0x000000cc       0x21 startup.o
+
+.debug_frame    0x00000000      0x230
+ .debug_frame   0x00000000      0x100 GPIO_V3_PROG.o
+ .debug_frame   0x00000100       0x2c main.o
+ .debug_frame   0x0000012c      0x104 RCCV2_Program.o
