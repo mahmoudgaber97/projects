@@ -1,8 +1,4 @@
-/***************************************************************************************/
-/****************************  IMT School Training Center ******************************/
-/***************************************************************************************/
-/** This file is developed by IMT School training center, All copyrights are reserved **/
-/***************************************************************************************/
+
 
 
 #ifndef TYPES_H_
@@ -22,4 +18,4 @@ typedef signed long long int s64 ;
 typedef float  f32;
 typedef double f64;
 
-#endif /* TYPES_H_ */
+#endif
