@@ -25,8 +25,8 @@ int main(){
 //u32 LOC_u64Mantissa=104;
 //u32 LOC_u64Fraction=3;
 
-	RCC_void_HSIdrive(ClockErorrDefualt);
-	RCC_EN_Prepheral( APB2_BUS ,GPIOA_RCC);
+	RCC_void_HSIdrive(ClockErorrDefualt); 			/*internal clk 8MHZ*/
+	RCC_EN_Prepheral( APB2_BUS ,GPIOA_RCC);			/*ENABLE GPIOA CLK*/
 	RCC_EN_Prepheral( APB2_BUS ,USART1_RCC);
 	PINCONFIGvoid(PORTA, PIN9,OUTPUT_SPEED_2MHZ_PP);
 	PINCONFIGvoid(PORTA, PIN0,OUTPUT_SPEED_2MHZ_PP);
@@ -38,10 +38,12 @@ int main(){
 	PINCONFIGvoid(PORTA, PIN4,OUTPUT_SPEED_2MHZ_PP);
 	PINCONFIGvoid(PORTA, PIN5,OUTPUT_SPEED_2MHZ_PP);
 	//MUSART->USART_BRR=52;
-			MUSART->USART_BRR=0x341;
+	/*SET Baud rate*/
+	MUSART->USART_BRR=0x341;
+	/*USART CONFIGRATION*/
 	MUSARTIntivoid();
-
-	//MSTK_voidInit(Clk_SuorceState);
+	/*ENABLE SYSTICK*/
+	MSTK_voidInit(Clk_SuorceState);
 
 	//MUSART->USART_BRR = ( LOC_u64Mantissa << 4  ) | ( LOC_u64Fraction / 100 ) ;
 		//	SET_BIT( MUSART->USART_BRR , 13 );
@@ -57,65 +59,57 @@ int main(){
 
 
 
-		DATA=Receive_u8Char();
+		DATA=Receive_u8Char();  /*READ DATA FROM MOBILE APPLICATION*/
 
-
-		//DATA=Receive_u8Char();
-
-
+/* when the  application sends certain data (a,b,c,......), system will take action */
 		switch(DATA){
-		          case 'a':
-					forword();
-					MSTK_VoidBasyWait(400000);
-					break;
-
-
+		         case 'a':
+			forword();
+			MSTK_VoidBasyWait(400000);
+			break;
 		          case 'b':
-					BACK();
-					MSTK_VoidBasyWait(400000);
-					break;
+			  BACK();
+			  MSTK_VoidBasyWait(400000);
+			  break;
 		          case 'c':
-				 RIGHT();
-				 MSTK_VoidBasyWait(400000);
+			 RIGHT();
+			 MSTK_VoidBasyWait(400000);
 		          break;
 		          case 'd':
-					LEFT();
-					MSTK_VoidBasyWait(400000);
-					break;
+			  LEFT();
+			  MSTK_VoidBasyWait(400000);
+			  break;
 		          case 'e':
-					BACK_LEFT();
-					MSTK_VoidBasyWait(400000);
+			  BACK_LEFT();
+			  MSTK_VoidBasyWait(400000);
 		          break;
 		          case 'f':
-					BACK_RIGHT();
-					MSTK_VoidBasyWait(400000);
+			  BACK_RIGHT();
+			  MSTK_VoidBasyWait(400000);
 		          break;
 
 		          case 's':
-		        	  SETPINvalue(PORTA,PIN4,HIGH);
-		        	  SETPINvalue(PORTA,PIN5,HIGH);
+		         SETPINvalue(PORTA,PIN4,HIGH);
+		         SETPINvalue(PORTA,PIN5,HIGH);
 
 
-		        	  break;
+		           break;
+		/*when the application sends "n", the system will fire alarm*/
 		          case 'n':
-	  SETPINvalue(PORTA,PIN4,HIGH);
+	        SETPINvalue(PORTA,PIN4,HIGH);
 	        SETPINvalue(PORTA,PIN5,HIGH);
-		     MSTK_VoidBasyWait(100000);
-		  SETPINvalue(PORTA,PIN4,LOW);
-		    SETPINvalue(PORTA,PIN5,LOW);
+		 MSTK_VoidBasyWait(100000);
+		 SETPINvalue(PORTA,PIN4,LOW);
+		  SETPINvalue(PORTA,PIN5,LOW);
 
 
 		    break;
-
-
-
-
-
 		}
+		/* stop actions*/
 		MSTK_VoidBasyWait(500000);
 		 STOP();
 		  SETPINvalue(PORTA,PIN4,LOW);
-	SETPINvalue(PORTA,PIN5,LOW);
+	         SETPINvalue(PORTA,PIN5,LOW);
 
 
 }
